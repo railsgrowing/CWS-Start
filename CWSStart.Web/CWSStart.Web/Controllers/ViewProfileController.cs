@@ -36,7 +36,7 @@ namespace CWSStart.Web.Controllers
             if (!String.IsNullOrEmpty(profileURLtoCheck))
             {
                 //Try and find member with the QueryString value ?profileURLtoCheck=warrenbuckley
-                Member findMember = Member.GetAllAsList().FirstOrDefault(x => x.getProperty("profileURL").Value.ToString() == profileURLtoCheck);
+                umbraco.cms.businesslogic.member.Member findMember = umbraco.cms.businesslogic.member.Member.GetAllAsList().FirstOrDefault(x => x.getProperty("profileURL").Value.ToString() == profileURLtoCheck);
 
                 //Check if we found member
                 if (findMember != null)

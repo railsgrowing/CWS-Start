@@ -591,9 +591,6 @@
             <summary>
             Summary description for DataTypeFolderbrowser.
             </summary>
-            <summary>
-            Summary description for DataTypeUploadField.
-            </summary>
         </member>
         <member name="T:umbraco.editorControls.folderBrowser">
             <summary>
@@ -857,7 +854,7 @@
             </summary>
             <remarks>
             The data type definition id is persisted between request as a query string.
-            This is used to retreive values from the cookie which are easier persisted values
+            This is used to retrieve values from the cookie which are easier persisted values
             than trying to append everything to custom query strings.
             </remarks>
             <param name="tree"></param>
@@ -2115,6 +2112,11 @@
             <param name="description">The description for the field.</param>
             <param name="controls">The controls for the field.</param>
         </member>
+        <member name="T:umbraco.editorControls.PropertyTypePicker">
+            <summary>
+            Summary description for propertyTypePicker.
+            </summary>
+        </member>
         <member name="T:umbraco.editorControls.radiobuttonlist.RadioButtonListDataType">
             <summary>
             Summary description for ColorPickerDataType.
@@ -2142,7 +2144,7 @@
             Extension methods for embedded resources
             </summary>
         </member>
-        <member name="M:umbraco.editorControls.ResourceExtensions.RegisterEmbeddedClientResource(System.Web.UI.Control,System.String,umbraco.cms.businesslogic.datatype.ClientDependencyType)">
+        <member name="M:umbraco.editorControls.ResourceExtensions.RegisterEmbeddedClientResource(System.Web.UI.Control,System.String,ClientDependency.Core.ClientDependencyType)">
             <summary>
             Registers the embedded client resource.
             </summary>
@@ -2150,7 +2152,7 @@
             <param name="resourceName">Name of the resource.</param>
             <param name="type">The type.</param>
         </member>
-        <member name="M:umbraco.editorControls.ResourceExtensions.RegisterEmbeddedClientResource(System.Web.UI.Control,System.Type,System.String,umbraco.cms.businesslogic.datatype.ClientDependencyType)">
+        <member name="M:umbraco.editorControls.ResourceExtensions.RegisterEmbeddedClientResource(System.Web.UI.Control,System.Type,System.String,ClientDependency.Core.ClientDependencyType)">
             <summary>
             Registers the embedded client resource.
             </summary>
@@ -2159,7 +2161,7 @@
             <param name="resourceName">Name of the resource.</param>
             <param name="type">The type.</param>
         </member>
-        <member name="M:umbraco.editorControls.ResourceExtensions.RegisterEmbeddedClientResource(System.Web.UI.Page,System.Type,System.String,umbraco.cms.businesslogic.datatype.ClientDependencyType)">
+        <member name="M:umbraco.editorControls.ResourceExtensions.RegisterEmbeddedClientResource(System.Web.UI.Page,System.Type,System.String,ClientDependency.Core.ClientDependencyType)">
             <summary>
             Registers the embedded client resource.
             </summary>
@@ -2906,24 +2908,6 @@
             </summary>
             <param name="postedFile"></param>
             <returns></returns>
-        </member>
-        <member name="M:umbraco.editorControls.uploadField.FindControlRecursive``1(System.Web.UI.Control,System.String)">
-            <summary>
-            Recursively finds a control with the specified identifier.
-            </summary>
-            <typeparam name="T">
-            The type of control to be found.
-            </typeparam>
-            <param name="parent">
-            The parent control from which the search will start.
-            </param>
-            <param name="id">
-            The identifier of the control to be found.
-            </param>
-            <returns>
-            The control with the specified identifier, otherwise <see langword="null"/> if the control 
-            is not found.
-            </returns>
         </member>
         <member name="M:umbraco.editorControls.uploadField.Render(System.Web.UI.HtmlTextWriter)">
             <summary> 

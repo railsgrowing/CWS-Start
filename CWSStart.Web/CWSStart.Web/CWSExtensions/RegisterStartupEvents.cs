@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 using CWSStart.Web.Pocos;
 using umbraco.BusinessLogic;
-using umbraco.cms.businesslogic.member;
-using umbraco.cms.businesslogic.web;
 using Umbraco.Core;
 using Umbraco.Core.Models;
+using Umbraco.Core.Services;
 using Umbraco.Core.Persistence;
 using Umbraco.Web.Routing;
 
@@ -29,8 +23,8 @@ namespace CWSStart.Web.CWSExtensions
 
             //Ensure our custom member type & it's properties are setup in Umbraco
             //If not let's create it
-            MemberGroup checkMemberGroup = MemberGroup.GetByName("CWS-Members");
-
+            var checkMemberGroup = ApplicationContext.Current.Services.MemberGroupService.GetByName("CWS-Members");
+            
             //Doesn't exist
             if (checkMemberGroup == null)
             {
@@ -40,7 +34,8 @@ namespace CWSStart.Web.CWSExtensions
 
             //Ensure our custom member type & it's properties are setup in Umbraco
             //If not let's create it
-            MemberType checkMemberType = MemberType.GetByAlias("CWS-Member");
+            var checkMemberType = ApplicationContext.Current.Services.MemberTypeService.Get("CWS-Member");
+            //umbraco.cms.businesslogic.member.MemberType checkMemberType = umbraco.cms.businesslogic.member.MemberType.GetByAlias("CWS-Member");
 
             //Doesn't exist
             if (checkMemberType == null)
@@ -74,10 +69,11 @@ namespace CWSStart.Web.CWSExtensions
         protected void AddCustomMemberGroup()
         {
             //Admin user
+            //ApplicationContext.Current.Services.UserService();
             var adminUser = new User(0);
 
             //Let's add our Member Group
-            var customMemberGroup = MemberGroup.MakeNew("CWS-Members", adminUser);
+            var customMemberGroup = umbraco.cms.businesslogic.member.MemberGroup.MakeNew("CWS-Members", adminUser);
             
             //Save it
             customMemberGroup.Save();
@@ -90,7 +86,7 @@ namespace CWSStart.Web.CWSExtensions
             var adminUser = new User(0);
 
             //So let's add it...
-            var customMemberType    = MemberType.MakeNew(adminUser, "CWS-Member");
+            var customMemberType    = umbraco.cms.businesslogic.member.MemberType.MakeNew(adminUser, "CWS-Member");
             customMemberType.Text   = "[CWS] Member";
             customMemberType.Alias  = "CWS-Member";
 

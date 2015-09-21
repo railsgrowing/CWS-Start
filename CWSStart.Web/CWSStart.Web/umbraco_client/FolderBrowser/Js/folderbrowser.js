@@ -160,13 +160,12 @@ Umbraco.Sys.registerNamespace("Umbraco.Controls");
             var self = this;
 
             // Inject the upload button into the toolbar
-            var button = $("<input id='fbUploadToolbarButton' type='image' src='images/editor/upload.png' title='Upload...' onmouseover=\"this.className='editorIconOver'\" onmouseout=\"this.className='editorIcon'\" onmouseup=\"this.className='editorIconOver'\" onmousedown=\"this.className='editorIconDown'\" />");
+            var button = $("<a href='#' class='btn' title='upload'><i class='icon-upload'></i></a>");
             button.click(function (e) {
                 e.preventDefault();
                 $(".upload-overlay").show();
             });
-
-            $(".tabpage:first-child .menubar td[id$='tableContainerButtons'] .sl nobr").after(button);
+            $(".umb-panel-header .umb-btn-toolbar").append(button);
         },
 
         _initOverlay: function () {
@@ -180,6 +179,7 @@ Umbraco.Sys.registerNamespace("Umbraco.Controls");
                 instructions +
                 "<form action=\"" + self._opts.umbracoPath + "/webservices/MediaUploader.ashx?format=json&action=upload&parentNodeId=" + this._parentId + "\" method=\"post\" enctype=\"multipart/form-data\">" +
                 "<input id='fileupload' type='file' name='file' multiple>" +
+                "<input type='hidden' name='__reqver' value='" + self._opts.reqver + "' />" +
                 "<input type='hidden' name='name' />" +
                 "<input type='hidden' name='replaceExisting' />" +
                 "</form>" +

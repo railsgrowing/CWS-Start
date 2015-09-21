@@ -30,16 +30,6 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="T:umbraco.MacroEngines.Library.PublishedContentExtensions">
-            <summary>
-            Extension methods for converting DynamicPublishedContent to INode
-            </summary>
-        </member>
-        <member name="T:umbraco.MacroEngines.Library.PublishedContentExtensions.ConvertedNode">
-            <summary>
-            Internal custom INode class used for conversions from DynamicPublishedContent
-            </summary>
-        </member>
         <member name="F:umbraco.MacroEngines.DynamicNode.GetDataTypeCallback">
             <summary>
             This callback is used only so we can set it dynamically for use in unit tests
@@ -87,6 +77,33 @@
             <summary>
             Creates Inline Razor File
             </summary>
+        </member>
+        <member name="T:umbraco.MacroEngines.Resources.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:umbraco.MacroEngines.Resources.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:umbraco.MacroEngines.Resources.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:umbraco.MacroEngines.Resources.Strings.WebConfig">
+             <summary>
+               Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
+            &lt;configuration&gt;
+            
+              &lt;configSections&gt;
+                &lt;sectionGroup name=&quot;system.web.webPages.razor&quot; type=&quot;System.Web.WebPages.Razor.Configuration.RazorWebSectionGroup, System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35&quot;&gt;
+                  &lt;section name=&quot;host&quot; type=&quot;System.Web.WebPages.Razor.Configuration.HostSection, System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35&quot; requirePermission=&quot;false&quot; /&gt;
+                  &lt;section name=&quot;page [rest of string was truncated]&quot;;.
+             </summary>
         </member>
     </members>
 </doc>

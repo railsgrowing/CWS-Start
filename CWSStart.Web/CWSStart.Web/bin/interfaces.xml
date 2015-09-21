@@ -18,6 +18,42 @@
             and bind to any custom events in the OnApplicationInitialized method.
             </remarks>
         </member>
+        <member name="T:umbraco.interfaces.IDataFieldWithButtons">
+            <summary>
+            Summary description for IDataFieldWithButtons.
+            </summary>
+        </member>
+        <member name="T:umbraco.interfaces.IDataEditor">
+            <summary>
+            The IDataEditor is part of the IDataType interface for creating new data types in the umbraco backoffice. 
+            The IDataEditor represents the editing UI for the Data Type.
+            </summary>
+        </member>
+        <member name="M:umbraco.interfaces.IDataEditor.Save">
+            <summary>
+            Saves this instance.
+            </summary>
+        </member>
+        <member name="P:umbraco.interfaces.IDataEditor.ShowLabel">
+            <summary>
+            Gets a value indicating whether a label is shown
+            </summary>
+            <value><c>true</c> if [show label]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:umbraco.interfaces.IDataEditor.TreatAsRichTextEditor">
+            <summary>
+            Gets a value indicating whether the editor should be treated as a rich text editor. 
+            </summary>
+            <value>
+            	<c>true</c> if [treat as rich text editor]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:umbraco.interfaces.IDataEditor.Editor">
+            <summary>
+            Gets the editor control
+            </summary>
+            <value>The editor.</value>
+        </member>
         <member name="T:umbraco.interfaces.ITask">
             <summary>
             Summary description for ITask.
@@ -37,6 +73,13 @@
             <summary>
             The IcacheRefresher Interface is used for loadbalancing.
             
+            </summary>
+        </member>
+        <member name="T:umbraco.interfaces.IDataValueSetter">
+            <summary>
+            Internal interface used to decorate any IData that can be optimized when exporting
+            XML like in the packaging service. Instead of relying on the IData to go get the value
+            from the db, any IData that implements this can have it's value set from the packaging service.
             </summary>
         </member>
         <member name="T:umbraco.interfaces.IData">
@@ -74,53 +117,6 @@
             Gets or sets the value.
             </summary>
             <value>The value.</value>
-        </member>
-        <member name="T:umbraco.interfaces.IDataEditor">
-            <summary>
-            The IDataEditor is part of the IDataType interface for creating new data types in the umbraco backoffice. 
-            The IDataEditor represents the editing UI for the Data Type.
-            </summary>
-        </member>
-        <member name="M:umbraco.interfaces.IDataEditor.Save">
-            <summary>
-            Saves this instance.
-            </summary>
-        </member>
-        <member name="P:umbraco.interfaces.IDataEditor.ShowLabel">
-            <summary>
-            Gets a value indicating whether a label is shown
-            </summary>
-            <value><c>true</c> if [show label]; otherwise, <c>false</c>.</value>
-        </member>
-        <member name="P:umbraco.interfaces.IDataEditor.TreatAsRichTextEditor">
-            <summary>
-            Gets a value indicating whether the editor should be treated as a rich text editor. 
-            </summary>
-            <value>
-            	<c>true</c> if [treat as rich text editor]; otherwise, <c>false</c>.
-            </value>
-        </member>
-        <member name="P:umbraco.interfaces.IDataEditor.Editor">
-            <summary>
-            Gets the editor control
-            </summary>
-            <value>The editor.</value>
-        </member>
-        <member name="T:umbraco.interfaces.IDataEditorAjaxAlternative">
-            <summary>
-            The alternative Data Editor which supports AJAX
-            </summary>
-        </member>
-        <member name="P:umbraco.interfaces.IDataEditorAjaxAlternative.AjaxEditor">
-            <summary>
-            Gets the ajax editor.
-            </summary>
-            <value>The ajax editor.</value>
-        </member>
-        <member name="T:umbraco.interfaces.IDataFieldWithButtons">
-            <summary>
-            Summary description for IDataFieldWithButtons.
-            </summary>
         </member>
         <member name="T:umbraco.interfaces.IDataPrevalue">
             <summary>
@@ -190,17 +186,6 @@
             Switching off preview mode restores the persistent value.
             </summary>
             <value><c>true</c> if preview mode is switched on; otherwise, <c>false</c>.</value>
-        </member>
-        <member name="T:umbraco.interfaces.ILiveEditingDataEditor">
-            <summary>
-            Data type editor controls can choose to implement this interface
-            to customize their Live Editing behavior.
-            </summary>
-        </member>
-        <member name="P:umbraco.interfaces.ILiveEditingDataEditor.LiveEditingControl">
-            <summary>
-            Gets the control used for Live Editing.
-            </summary>
         </member>
         <member name="T:umbraco.interfaces.IMacroGuiRendering">
             <summary>

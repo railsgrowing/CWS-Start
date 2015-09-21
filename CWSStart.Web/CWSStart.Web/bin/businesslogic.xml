@@ -71,19 +71,6 @@
             Stores all references to classes that are of type IApplication
             </summary>
         </member>
-        <member name="P:umbraco.BusinessLogic.Application.AppConfigFilePath">
-            <summary>
-            gets/sets the application.config file path
-            </summary>
-            <remarks>
-            The setter is generally only going to be used in unit tests, otherwise it will attempt to resolve it using the IOHelper.MapPath
-            </remarks>
-        </member>
-        <member name="P:umbraco.BusinessLogic.Application.Apps">
-            <summary>
-            The cache storage for all applications
-            </summary>
-        </member>
         <member name="P:umbraco.BusinessLogic.Application.SqlHelper">
             <summary>
             Gets the SQL helper.
@@ -137,6 +124,43 @@
             To use, inhirite the ApplicationBase Class and add an empty constructor. 
             </summary>
         </member>
+        <member name="T:umbraco.BusinessLogic.ApplicationRegistrar">
+            <summary>
+            A startup handler for putting the app config in the config file based on attributes found
+            </summary>
+            /// <remarks>
+            TODO: This is really not a very ideal process but the code is found here because tree plugins are in the Web project or the legacy business logic project.
+            Moving forward we can put the base tree plugin classes in the core and then this can all just be taken care of normally within the service.
+            </remarks>
+        </member>
+        <member name="M:umbraco.BusinessLogic.ApplicationRegistrar.ConfigureMappings(AutoMapper.IConfiguration,Umbraco.Core.ApplicationContext)">
+            <summary>
+            Configure a few auto-mappings
+            </summary>
+            <param name="config"></param>
+            <param name="applicationContext"></param>
+        </member>
+        <member name="T:umbraco.BusinessLogic.ApplicationRegistrar.LazyEnumerableSections">
+            <summary>
+            This class is here so that we can provide lazy access to tree scanning for when it is needed
+            </summary>
+        </member>
+        <member name="M:umbraco.BusinessLogic.ApplicationRegistrar.LazyEnumerableSections.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:umbraco.BusinessLogic.ApplicationRegistrar.LazyEnumerableSections.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+        </member>
         <member name="T:umbraco.businesslogic.ApplicationStartupHandler">
             <summary>
             ApplicationStartupHandler provides an easy to use base class to install event handlers in umbraco.
@@ -150,6 +174,12 @@
             An application tree is a collection of nodes belonging to one or more application(s).
             Through this class new application trees can be created, modified and deleted. 
             </summary>
+        </member>
+        <member name="M:umbraco.BusinessLogic.ApplicationTree.GetRuntimeType">
+            <summary>
+            Returns the CLR type based on it's assembly name stored in the config
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:umbraco.BusinessLogic.ApplicationTree.#ctor">
             <summary>
@@ -226,25 +256,6 @@
             <param name="onlyInitializedApplications"></param>
             <returns>Returns a ApplicationTree Array</returns>
         </member>
-        <member name="P:umbraco.BusinessLogic.ApplicationTree.TreeConfigFilePath">
-            <summary>
-            gets/sets the trees.config file path
-            </summary>
-            <remarks>
-            The setter is generally only going to be used in unit tests, otherwise it will attempt to resolve it using the IOHelper.MapPath
-            </remarks>
-        </member>
-        <member name="P:umbraco.BusinessLogic.ApplicationTree.AppTrees">
-            <summary>
-            The cache storage for all application trees
-            </summary>
-        </member>
-        <member name="P:umbraco.BusinessLogic.ApplicationTree.SqlHelper">
-            <summary>
-            Gets the SQL helper.
-            </summary>
-            <value>The SQL helper.</value>
-        </member>
         <member name="P:umbraco.BusinessLogic.ApplicationTree.Silent">
             <summary>
             Gets or sets a value indicating whether this <see cref="T:umbraco.BusinessLogic.ApplicationTree"/> is silent.
@@ -310,6 +321,16 @@
             Gets or sets the default tree action.
             </summary>
             <value>The action.</value>
+        </member>
+        <member name="T:umbraco.BusinessLogic.ApplicationTreeRegistrar">
+            <summary>
+            A startup handler for dealing with trees
+            </summary>
+        </member>
+        <member name="M:umbraco.BusinessLogic.ApplicationTreeRegistrar.ConfigureMappings(AutoMapper.IConfiguration,Umbraco.Core.ApplicationContext)">
+            <summary>
+            Configures automapper model mappings
+            </summary>
         </member>
         <member name="T:umbraco.BusinessLogic.LogTypes">
             <summary>
@@ -516,14 +537,26 @@
             <summary>
             Gets the user id.
             </summary>
-            <param name="umbracoUserContextID">The umbraco user context ID.</param>
+            <param name="umbracoUserContextID">This is not used</param>
+            <returns></returns>
+        </member>
+        <member name="M:umbraco.BasePages.BasePage.GetUserId">
+            <summary>
+            Gets the currnet user's id.
+            </summary>
             <returns></returns>
         </member>
         <member name="M:umbraco.BasePages.BasePage.ValidateUserContextID(System.String)">
             <summary>
             Validates the user context ID.
             </summary>
-            <param name="currentUmbracoUserContextID">The umbraco user context ID.</param>
+            <param name="currentUmbracoUserContextID">This doesn't do anything</param>
+            <returns></returns>
+        </member>
+        <member name="M:umbraco.BasePages.BasePage.ValidateCurrentUser">
+            <summary>
+            Validates the currently logged in user and ensures they are not timed out
+            </summary>
             <returns></returns>
         </member>
         <member name="M:umbraco.BasePages.BasePage.ClearLogin">
@@ -687,6 +720,12 @@
             </summary>
             <param name="url"></param>
         </member>
+        <member name="M:umbraco.BasePages.ClientTools.ReloadContentFrameUrlIfPathLoaded(System.String)">
+            <summary>
+            Reloads the content in the content frame if the specified URL is currently loaded
+            </summary>
+            <param name="url"></param>
+        </member>
         <member name="M:umbraco.BasePages.ClientTools.ShowDashboard(System.String)">
             <summary>
             Shows the dashboard for the given application
@@ -805,6 +844,13 @@
             UmbracoEnsuredPage is the standard protected page in the umbraco backend, and forces authentication.
             </summary>
         </member>
+        <member name="M:umbraco.BasePages.UmbracoEnsuredPage.OnPreInit(System.EventArgs)">
+            <summary>
+            Checks if the page exists outside of the /umbraco route, in which case the request will not have been authenticated for the back office 
+            so we'll force authentication.
+            </summary>
+            <param name="e"></param>
+        </member>
         <member name="M:umbraco.BasePages.UmbracoEnsuredPage.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:umbraco.BasePages.UmbracoEnsuredPage"/> class.
@@ -831,6 +877,14 @@
             </summary>
             <param name="e">An <see cref="T:System.EventArgs"></see> that contains the event data.</param>
         </member>
+        <member name="P:umbraco.BasePages.UmbracoEnsuredPage.CurrentApp">
+            <summary>
+            Gets/sets the app for which this page belongs to so that we can validate the current user's security against it
+            </summary>
+            <remarks>
+            If no app is specified then all logged in users will have access to the page
+            </remarks>
+        </member>
         <member name="P:umbraco.BasePages.UmbracoEnsuredPage.RedirectToUmbraco">
             <summary>
             If true then umbraco will force any window/frame to reload umbraco in the main window
@@ -841,6 +895,12 @@
             Gets the current user.
             </summary>
             <value>The current user.</value>
+        </member>
+        <member name="T:umbraco.BasePages.UmbracoEnsuredPage.WebformsPageTreeAuthorizeAttribute">
+            <summary>
+            Used to assign a webforms page's security to a specific tree which will in turn check to see
+            if the current user has access to the specified tree's registered section
+            </summary>
         </member>
         <member name="T:umbraco.businesslogic.Exceptions.UserAuthorizationException">
             <summary>
@@ -924,12 +984,6 @@
             Gets or sets the configuration status. This will return the version number of the currently installed umbraco instance.
             </summary>
             <value>The configuration status.</value>
-        </member>
-        <member name="P:umbraco.GlobalSettings.UseMediumTrust">
-            <summary>
-            Forces umbraco to be medium trust compatible
-            </summary>
-            <value>If true, umbraco will be medium-trust compatible, no matter what Permission level the server is on.</value>
         </member>
         <member name="P:umbraco.GlobalSettings.FullpathToRoot">
             <summary>
@@ -1415,28 +1469,6 @@
             Provides access to language settings and language files used in the umbraco back-end.
             </summary>
         </member>
-        <member name="M:umbraco.ui.Culture(umbraco.BusinessLogic.User)">
-            <summary>
-            Gets the current Culture for the logged-in users
-            </summary>
-            <param name="u">The user.</param>
-            <returns></returns>
-        </member>
-        <member name="M:umbraco.ui.GetLanguage">
-            <summary>
-            Check if th user is logged in, if they are, return their language specified in the database.
-            If they aren't logged in, check the current thread culture and return it, however if that is
-            null, then return the default Umbraco culture.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:umbraco.ui.GetLanguage(umbraco.BusinessLogic.User)">
-            <summary>
-            Check if th user is logged in, if they are, return their language specified in the database.
-            If they aren't logged in, check the current thread culture and return it, however if that is
-            null, then return the default Umbraco culture.
-            </summary>
-        </member>
         <member name="M:umbraco.ui.Text(System.String,umbraco.BusinessLogic.User)">
             <summary>
             Returns translated UI text with a specific key based on the specified user's language settings
@@ -1540,6 +1572,13 @@
             <param name="language">The language.</param>
             <returns></returns>
         </member>
+        <member name="M:umbraco.ui.ConvertToDictionaryVars(System.String[])">
+            <summary>
+            Convert an array of strings to a dictionary of indicies -> values
+            </summary>
+            <param name="variables"></param>
+            <returns></returns>
+        </member>
         <member name="T:umbraco.UmbracoSettings">
             <summary>
             The UmbracoSettings Class contains general settings information for the entire Umbraco instance based on information from the /config/umbracoSettings.config file
@@ -1549,14 +1588,14 @@
             <summary>
             Selects a xml node in the umbraco settings config file.
             </summary>
-            <param name="Key">The xpath query to the specific node.</param>
+            <param name="key">The xpath query to the specific node.</param>
             <returns>If found, it returns the specific configuration xml node.</returns>
         </member>
         <member name="M:umbraco.UmbracoSettings.GetKey(System.String)">
             <summary>
             Gets the value of configuration xml node with the specified key.
             </summary>
-            <param name="Key">The key.</param>
+            <param name="key">The key.</param>
             <returns></returns>
         </member>
         <member name="P:umbraco.UmbracoSettings._umbracoSettings">
@@ -1564,11 +1603,6 @@
             Gets the umbraco settings document.
             </summary>
             <value>The _umbraco settings.</value>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.SettingsFilePath">
-            <summary>
-            Gets/sets the settings file path, the setter can be used in unit tests
-            </summary>
         </member>
         <member name="P:umbraco.UmbracoSettings.UploadAllowDirectories">
             <summary>
@@ -1608,11 +1642,6 @@
         <member name="P:umbraco.UmbracoSettings.KeepUserLoggedIn">
             <summary>
             Keep user alive as long as they have their browser open? Default is true
-            </summary>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.EnableCanvasEditing">
-            <summary>
-            Enables the experimental canvas (live) editing on the frontend of the website
             </summary>
         </member>
         <member name="P:umbraco.UmbracoSettings.HideDisabledUsersInBackoffice">
@@ -1902,65 +1931,10 @@
             <value>Configured text for the default document type property</value>
             <remarks>If undefined, 'Textstring' is the default</remarks>
         </member>
-        <member name="T:umbraco.UmbracoSettings.Webservices">
+        <member name="P:umbraco.UmbracoSettings.SettingsFilePath">
             <summary>
-            Configuration regarding webservices
+            Gets the settings file path
             </summary>
-            <remarks>Put in seperate class for more logik/seperation</remarks>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.Webservices.Enabled">
-            <summary>
-            Gets a value indicating whether this <see cref="T:umbraco.UmbracoSettings.Webservices"/> is enabled.
-            </summary>
-            <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.Webservices.documentServiceUsers">
-            <summary>
-            Gets the document service users who have access to use the document web service
-            </summary>
-            <value>The document service users.</value>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.Webservices.fileServiceUsers">
-            <summary>
-            Gets the file service users who have access to use the file web service
-            </summary>
-            <value>The file service users.</value>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.Webservices.fileServiceFolders">
-            <summary>
-            Gets the folders used by the file web service
-            </summary>
-            <value>The file service folders.</value>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.Webservices.memberServiceUsers">
-            <summary>
-            Gets the member service users who have access to use the member web service
-            </summary>
-            <value>The member service users.</value>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.Webservices.stylesheetServiceUsers">
-            <summary>
-            Gets the stylesheet service users who have access to use the stylesheet web service
-            </summary>
-            <value>The stylesheet service users.</value>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.Webservices.templateServiceUsers">
-            <summary>
-            Gets the template service users who have access to use the template web service
-            </summary>
-            <value>The template service users.</value>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.Webservices.mediaServiceUsers">
-            <summary>
-            Gets the media service users who have access to use the media web service
-            </summary>
-            <value>The media service users.</value>
-        </member>
-        <member name="P:umbraco.UmbracoSettings.Webservices.maintenanceServiceUsers">
-            <summary>
-            Gets the maintenance service users who have access to use the maintance web service
-            </summary>
-            <value>The maintenance service users.</value>
         </member>
         <member name="T:umbraco.BusinessLogic.User">
             <summary>
@@ -1995,7 +1969,7 @@
         </member>
         <member name="M:umbraco.BusinessLogic.User.Save">
             <summary>
-            Used to persist object changes to the database. In Version3.0 it's just a stub for future compatibility
+            Used to persist object changes to the database.
             </summary>
         </member>
         <member name="M:umbraco.BusinessLogic.User.GetPassword">
@@ -2082,7 +2056,7 @@
             Gets all users by login name.
             </summary>
             <param name="login">The login.</param>
-            <param name="">whether to use a partial match</param>
+            <param name="partialMatch">whether to use a partial match</param>
             <returns></returns>
         </member>
         <member name="M:umbraco.BusinessLogic.User.MakeNew(System.String,System.String,System.String,umbraco.BusinessLogic.UserType)">
@@ -2102,7 +2076,7 @@
             <param name="lname">The lname.</param>
             <param name="passw">The passw.</param>
             <param name="email">The email.</param>
-            <param name="ut">The ut.</param>
+            <param name="ut">The ut.</param>        
         </member>
         <member name="M:umbraco.BusinessLogic.User.Update(System.Int32,System.String,System.String,System.String,umbraco.BusinessLogic.UserType)">
             <summary>
@@ -2113,6 +2087,15 @@
             <param name="lname">The lname.</param>
             <param name="email">The email.</param>
             <param name="ut">The ut.</param>
+        </member>
+        <member name="M:umbraco.BusinessLogic.User.Update(System.Int32,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Updates the membership provider properties
+            </summary>
+            <param name="id">The id.</param>
+            <param name="email"></param>
+            <param name="disabled"></param>
+            <param name="noConsole"></param>        
         </member>
         <member name="M:umbraco.BusinessLogic.User.getUserId(System.String,System.String)">
             <summary>
@@ -2168,10 +2151,21 @@
             Initializes the notifications and caches them.
             </summary>
         </member>
+        <member name="M:umbraco.BusinessLogic.User.ClearApplications">
+            <summary>
+            Clears the list of applications the user has access to, ensure to call Save afterwords
+            </summary>
+        </member>
         <member name="M:umbraco.BusinessLogic.User.clearApplications">
             <summary>
             Clears the list of applications the user has access to.
             </summary>
+        </member>
+        <member name="M:umbraco.BusinessLogic.User.AddApplication(System.String)">
+            <summary>
+            Adds a application to the list of allowed applications, ensure to call Save() afterwords
+            </summary>
+            <param name="appAlias"></param>
         </member>
         <member name="M:umbraco.BusinessLogic.User.addApplication(System.String)">
             <summary>
@@ -2281,20 +2275,7 @@
             </summary>
             <value><c>true</c> if disabled; otherwise, <c>false</c>.</value>
         </member>
-        <member name="P:umbraco.BusinessLogic.User.DefaultToLiveEditing">
-            <summary>
-            Gets or sets a value indicating whether a user should be redirected to liveediting by default.
-            </summary>
-            <value>
-            	<c>true</c> if defaults to live editing; otherwise, <c>false</c>.
-            </value>
-        </member>
-        <member name="P:umbraco.BusinessLogic.User.StartNodeId">
-            <summary>
-            Gets or sets the start content node id.
-            </summary>
-            <value>The start node id.</value>
-        </member>
+        <!-- Badly formed XML comment ignored for member "P:umbraco.BusinessLogic.User.StartNodeId" -->
         <member name="P:umbraco.BusinessLogic.User.StartMediaId">
             <summary>
             Gets or sets the start media id.
@@ -2543,83 +2524,6 @@
             }
             </summary>
             <typeparam name="T">Any class that implements default constructor</typeparam>
-        </member>
-        <member name="T:umbraco.BusinessLogic.Utils.TypeFinder">
-            <summary>
-            A utility class to find all classes of a certain type by reflection in the current bin folder
-            of the web application. 
-            </summary>
-        </member>
-        <member name="M:umbraco.BusinessLogic.Utils.TypeFinder.FindClassesMarkedWithAttribute(System.Type)">
-            <summary>
-            Searches all loaded assemblies for classes marked with the attribute passed in.
-            </summary>
-            <returns>A list of found types</returns>
-        </member>
-        <member name="M:umbraco.BusinessLogic.Utils.TypeFinder.FindClassesOfType``1">
-            <summary>
-            Searches all loaded assemblies for classes of the type passed in.
-            </summary>
-            <typeparam name="T">The type of object to search for</typeparam>
-            <returns>A list of found types</returns>
-        </member>
-        <member name="M:umbraco.BusinessLogic.Utils.TypeFinder.FindClassesOfType``1(System.Boolean)">
-            <summary>
-            Searches all loaded assemblies for classes of the type passed in.
-            </summary>
-            <typeparam name="T">The type of object to search for</typeparam>
-            <param name="useSeperateAppDomain">true if a seperate app domain should be used to query the types. This is safer as it is able to clear memory after loading the types.</param>
-            <returns>A list of found types</returns>
-        </member>
-        <member name="M:umbraco.BusinessLogic.Utils.TypeFinder.FindClassesOfType``1(System.Boolean,System.Boolean)">
-            <summary>
-            Searches all loaded assemblies for classes of the type passed in.
-            </summary>
-            <typeparam name="T">The type of object to search for</typeparam>
-            <param name="useSeperateAppDomain">true if a seperate app domain should be used to query the types. This is safer as it is able to clear memory after loading the types.</param>
-            <param name="onlyConcreteClasses">True to only return classes that can be constructed</param>
-            <returns>A list of found types</returns>
-        </member>
-        <member name="T:umbraco.BusinessLogic.Utils.TypeResolver">
-            <summary>
-            Represents the Umbraco Typeresolver class.
-            The typeresolver is a collection of utillities for finding and determining types and classes with reflection.
-            </summary>
-        </member>
-        <member name="M:umbraco.BusinessLogic.Utils.TypeResolver.GetAssignablesFromType``1(System.String,System.String)">
-            <summary>
-            Gets a collection of assignables of type T from a collection of a specific file type from a specified path.
-            </summary>
-            <typeparam name="T">The Type</typeparam>
-            <param name="path">The path.</param>
-            <param name="filePattern">The file pattern.</param>
-            <returns></returns>
-        </member>
-        <member name="M:umbraco.BusinessLogic.Utils.TypeResolver.GetAssignablesFromType``1(System.String[])">
-            <summary>
-            Gets a collection of assignables of type T from a collection of files
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="files">The files.</param>
-            <returns></returns>
-        </member>
-        <member name="M:umbraco.BusinessLogic.Utils.TypeResolver.GetTypes(System.Type,System.String[])">
-            <summary>
-            Returns of a collection of type names from a collection of assembky files.
-            </summary>
-            <param name="assignTypeFrom">The assign type.</param>
-            <param name="assemblyFiles">The assembly files.</param>
-            <returns></returns>
-        </member>
-        <member name="M:umbraco.BusinessLogic.Utils.TypeResolver.CreateInstance``1(System.String,System.String)">
-            <summary>
-            Creates an instance of the type indicated by <paramref name="fullName"/> and ensures
-            it implements the interface indicated by <typeparamref name="T"/>.
-            </summary>
-            <typeparam name="T">The type of the service interface.</typeparam>
-            <param name="service">The name of the service we're trying to implement.</param>
-            <param name="fullName">The full name of the type implementing the service.</param>
-            <returns>A class implementing <typeparamref name="T"/>.</returns>
         </member>
         <member name="T:umbraco.xmlHelper">
             <summary>

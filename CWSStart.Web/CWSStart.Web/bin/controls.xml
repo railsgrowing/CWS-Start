@@ -81,9 +81,9 @@
                 Umbraco.Controls.TreePicker = function(clientId, label, itemIdValueClientID, itemTitleClientID, itemPickerUrl, width, height, showHeader, umbracoPath) {
                     var obj = {
                         _itemPickerUrl: itemPickerUrl,
-                        _webServiceUrl: umbracoPath + &quot;/webservices/legacyAjaxCalls.asmx/GetNodeName&quot;,
+                        _webServiceUrl: umbracoPath + &quot;/webservices/legacyAjaxCalls.asmx/GetNodeBreadcrumbs&quot;,
                         _label: label,
-                        _width: wid [rest of string was truncated]&quot;;.
+                        _wid [rest of string was truncated]&quot;;.
              </summary>
         </member>
         <member name="T:umbraco.uicontrols.TreeUrlGenerator">

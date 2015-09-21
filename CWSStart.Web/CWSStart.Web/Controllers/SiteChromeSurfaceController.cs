@@ -15,7 +15,7 @@ namespace CWSStart.Web.Controllers
         public ActionResult RenderNavi()
         {
             //Get the homepage node
-            var home    = Umbraco.TypedContentAtRoot().SingleOrDefault(x => x.DocumentTypeAlias == "CWS-Home");
+            var home    = Umbraco.TypedContentAtRoot().SingleOrDefault(x => x.DocumentTypeAlias == "CWSHome");
             var pages   = home.Children;
             
             //Return our collection of pages to the view
